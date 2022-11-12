@@ -1,0 +1,47 @@
+#creation of DataBase
+create database Customers;
+use Customers;
+#creation of tables
+create table Customers_data(
+	customer_id int primary key not null auto_increment,
+	customer_name varchar(64) not null default 'NO NAME PROVIDED',
+	city_id int default NULL,
+	foreign key (city_id) references Cities(city_ids) on delete cascade
+);
+
+insert Customers_data(customer_name, city_id)
+Values
+('Иванов Т.М.', 3),
+('Пановко И.Т.', 2),
+('Черненко И.А.', 3),
+('Пановко А.И.', 2),
+('Иванова А.И.', 1);
+
+select * from Customers_data;
+
+create table Cities(
+	city_ids int primary key not null auto_increment,
+    city varchar(64)
+);
+
+insert Cities(city)
+Values
+('Москва'),
+('Санкт-Петербург'),
+('Пермь'),
+('Воронеж'),
+('Липецк');
+
+select * from Cities;
+# joins
+select Customers_data.customer_id, Customers_data.customer_name, Cities.city_ids, Cities.city from Customers_data, Cities
+Where Customers_data.city_id = Cities.city_ids;
+
+select Customers_data.customer_id, Customers_data.customer_name, Cities.city_ids, Cities.city
+from Customers_data join Cities on Customers_data.city_id = Cities.city_ids;
+
+select Customers_data.customer_id, Customers_data.customer_name, Cities.city_ids, Cities.city
+from Customers_data left join Cities on Customers_data.city_id = Cities.city_ids;
+
+select Customers_data.customer_id, Customers_data.customer_name, Cities.city_ids, Cities.city
+from Customers_data right join Cities on Customers_data.city_id = Cities.city_ids;
